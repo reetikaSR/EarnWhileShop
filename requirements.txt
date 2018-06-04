@@ -1,0 +1,4 @@
+python_decouple==2.3
+twilio==6.11.0
+Django==2.0.4
+AmazonASINMatcher==3.2

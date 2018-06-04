@@ -1,0 +1,21 @@
+# Distribution / packaging
+.Python
+env/
+bin/
+build/
+develop-eggs/
+dist/
+eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+.vscode/
+*.egg-info/
+.installed.cfg
+*.egg
+
+*.sqlite3
+.idea
+.env

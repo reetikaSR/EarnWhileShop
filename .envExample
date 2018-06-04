@@ -1,0 +1,7 @@
+DEBUG = True
+TWILIO_ACCOUNT_SID_KEY = twilioSID
+TWILIO_AUTH_TOKEN = twilioAuthToken
+SECRET_TWILIO_FROM_NUMBER = twilioNumber
+
+AMAZON_ASSOCIATE_KEY = amazonAssociateID
+SECRET_KEY=secretKey

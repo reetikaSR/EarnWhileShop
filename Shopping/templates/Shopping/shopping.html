@@ -1,0 +1,66 @@
+{%  extends 'home_page/master.html' %}
+{% block script %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script>
+    $(document).ready(function(){
+        $("#get_pin_button").click(function(){
+            var phonepattern = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+            var phoneno = $("#paytm_number").val();
+            if(phoneno.match(phonepattern)) {
+                $.ajax({
+                    url: '/shopping/ajax_send_pin/',
+                    type: 'POST',
+                    data: {"paytm_number": phoneno},
+                    beforeSend: function (xhr, settings) {
+                        if (!this.crossDomain) {
+                            xhr.setRequestHeader("X-CSRFToken", jQuery("[name=csrfmiddlewaretoken]").val());
+                        }
+                    },
+                    success: function (data) {
+                        alert(data);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        alert(errorThrown + ' : ' + jqXHR.responseText)
+                    }
+                });
+                return true;
+            }
+            else
+            {
+                alert("enter a valid phone number");
+                return false;
+            }
+        });
+    });
+</script>
+{% endblock %}
+{% block body %}
+    <form id = "shopping_form" method="post" role="form">
+        {% csrf_token %}
+        {% if form.errors %}
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
+        <div class="form-group" align="left">
+            <label for="product_link">Product Link: </label>
+            <input id="product_link" required type="url" name="link" placeholder="product link.."  value="{{ product_link }}">
+        </div>
+
+        <div class="form-group" align="left">
+            <label for="Quantity">Quantity: </label>
+            <input id="Quantity" required min="1" type="number" name="quantity" placeholder="Quantity.."  value="{{ qty }}">
+        </div>
+
+        <div class="form-group" align="left">
+            <label for="paytm_number">Paytm Number: </label>
+            <input id="paytm_number" required type="text" pattern="[789][0-9]{9}" name="paytm_number" placeholder="number.."  value="{{ paytm_number }}">
+            <button id = "get_pin_button" type="button"> Get PIN</button>
+        </div>
+        <button type="submit" class="btn btn-primary" align="left"> Buy </button>
+    </form>
+{% endblock %}
